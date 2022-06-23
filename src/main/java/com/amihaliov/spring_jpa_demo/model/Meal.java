@@ -1,9 +1,8 @@
 package com.amihaliov.spring_jpa_demo.model;
 
-import lombok.Builder;
-import lombok.Data;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "meals")
@@ -14,6 +13,8 @@ public class Meal extends BaseEntity{
 
     @Column(name = "price")
     private Double price;
+
+    private Long ingredient_id;
 
     public String getName() {
         return name;
@@ -29,5 +30,13 @@ public class Meal extends BaseEntity{
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Long getIngredient_id() {
+        return ingredient_id;
+    }
+
+    public void setIngredient_id(Long ingredient_id) {
+        this.ingredient_id = ingredient_id;
     }
 }
