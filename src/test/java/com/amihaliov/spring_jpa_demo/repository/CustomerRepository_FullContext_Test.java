@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class CustomerRepository_FullContext_Test {
@@ -16,7 +17,7 @@ class CustomerRepository_FullContext_Test {
 
     @Test
     void saveCustomerTest() {
-        assertEquals(2, customerRepository.count());
+        assertEquals(1, customerRepository.count());
 
         Customer customer = new Customer();
         customer.setFirstName("FirstNameTest");
@@ -32,6 +33,6 @@ class CustomerRepository_FullContext_Test {
 
         assertNotNull(savedCustomer);
 
-        assertEquals(3, customerRepository.count());
+        assertEquals(2, customerRepository.count());
     }
 }
