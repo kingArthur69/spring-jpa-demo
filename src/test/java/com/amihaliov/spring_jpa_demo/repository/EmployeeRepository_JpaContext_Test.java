@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,6 +14,7 @@ Use with @Order(1) on test method to set the order of tests
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 */
 @DataJpaTest
+@ComponentScan(basePackages = {"com.amihaliov.spring_jpa_demo.bootstrap"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class EmployeeRepository_JpaContext_Test {
 
@@ -26,7 +28,7 @@ class EmployeeRepository_JpaContext_Test {
     */
     @Test
     void saveEmployeeTest() {
-        assertEquals(0, employeeRepository.count());
+        assertEquals(1, employeeRepository.count());
 
         Employee employee = new Employee();
         employee.setFirstName("Tim");
@@ -34,6 +36,6 @@ class EmployeeRepository_JpaContext_Test {
 
         employeeRepository.save(employee);
 
-        assertEquals(1, employeeRepository.count());
+        assertEquals(2, employeeRepository.count());
     }
 }
