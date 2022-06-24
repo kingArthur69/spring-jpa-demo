@@ -14,8 +14,6 @@ public class Meal extends BaseEntity{
     @Column(name = "price")
     private Double price;
 
-    private Long ingredient_id;
-
     public String getName() {
         return name;
     }
@@ -32,11 +30,4 @@ public class Meal extends BaseEntity{
         this.price = price;
     }
 
-    public Long getIngredient_id() {
-        return ingredient_id;
-    }
-
-    public void setIngredient_id(Long ingredient_id) {
-        this.ingredient_id = ingredient_id;
-    }
 }
