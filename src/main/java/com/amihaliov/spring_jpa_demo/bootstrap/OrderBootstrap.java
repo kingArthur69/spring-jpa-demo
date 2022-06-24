@@ -1,11 +1,9 @@
 package com.amihaliov.spring_jpa_demo.bootstrap;
 
-import com.amihaliov.spring_jpa_demo.model.Customer;
-import com.amihaliov.spring_jpa_demo.model.Employee;
-import com.amihaliov.spring_jpa_demo.model.Meal;
-import com.amihaliov.spring_jpa_demo.model.Order;
+import com.amihaliov.spring_jpa_demo.model.*;
 import com.amihaliov.spring_jpa_demo.repository.CustomerRepository;
 import com.amihaliov.spring_jpa_demo.repository.EmployeeRepository;
+import com.amihaliov.spring_jpa_demo.repository.IngredientRepository;
 import com.amihaliov.spring_jpa_demo.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -23,17 +21,20 @@ public class OrderBootstrap implements ApplicationListener<ContextRefreshedEvent
     private final CustomerRepository customerRepository;
     private final EmployeeRepository employeeRepository;
     private final OrderRepository orderRepository;
+    private final IngredientRepository ingredientRepository;
 
-    public OrderBootstrap(CustomerRepository customerRepository, EmployeeRepository employeeRepository, OrderRepository orderRepository) {
+    public OrderBootstrap(CustomerRepository customerRepository, EmployeeRepository employeeRepository, OrderRepository orderRepository, IngredientRepository ingredientRepository) {
         this.customerRepository = customerRepository;
         this.employeeRepository = employeeRepository;
         this.orderRepository = orderRepository;
+        this.ingredientRepository = ingredientRepository;
     }
 
     private Order getOrder() {
         customerRepository.deleteAll();
         employeeRepository.deleteAll();
         orderRepository.deleteAll();
+        ingredientRepository.deleteAll();
 
         Customer customer = new Customer();
         customer.setAddress("Peterson 5, ap 6");
@@ -50,6 +51,11 @@ public class OrderBootstrap implements ApplicationListener<ContextRefreshedEvent
 
         employeeRepository.save(employee);
         log.info("Saved employee " +  employee);
+
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("Potato");
+
+        ingredientRepository.save(ingredient);
 
         Meal pizza = new Meal();
         pizza.setName("pizza");
