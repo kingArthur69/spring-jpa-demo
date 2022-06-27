@@ -1,10 +1,7 @@
 package com.amihaliov.spring_jpa_demo.bootstrap;
 
 import com.amihaliov.spring_jpa_demo.model.*;
-import com.amihaliov.spring_jpa_demo.repository.CustomerRepository;
-import com.amihaliov.spring_jpa_demo.repository.EmployeeRepository;
-import com.amihaliov.spring_jpa_demo.repository.IngredientRepository;
-import com.amihaliov.spring_jpa_demo.repository.OrderRepository;
+import com.amihaliov.spring_jpa_demo.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -22,12 +19,14 @@ public class OrderBootstrap implements ApplicationListener<ContextRefreshedEvent
     private final EmployeeRepository employeeRepository;
     private final OrderRepository orderRepository;
     private final IngredientRepository ingredientRepository;
+    private final PlaceRepository placeRepository;
 
-    public OrderBootstrap(CustomerRepository customerRepository, EmployeeRepository employeeRepository, OrderRepository orderRepository, IngredientRepository ingredientRepository) {
+    public OrderBootstrap(CustomerRepository customerRepository, EmployeeRepository employeeRepository, OrderRepository orderRepository, IngredientRepository ingredientRepository, PlaceRepository placeRepository) {
         this.customerRepository = customerRepository;
         this.employeeRepository = employeeRepository;
         this.orderRepository = orderRepository;
         this.ingredientRepository = ingredientRepository;
+        this.placeRepository = placeRepository;
     }
 
     private Order getOrder() {
@@ -35,6 +34,7 @@ public class OrderBootstrap implements ApplicationListener<ContextRefreshedEvent
         employeeRepository.deleteAll();
         orderRepository.deleteAll();
         ingredientRepository.deleteAll();
+        placeRepository.deleteAll();
 
         Customer customer = new Customer();
         customer.setAddress("Peterson 5, ap 6");
@@ -56,6 +56,12 @@ public class OrderBootstrap implements ApplicationListener<ContextRefreshedEvent
         ingredient.setName("Potato");
 
         ingredientRepository.save(ingredient);
+
+        Place place = new Place();
+        place.setName("Bob's Pizza");
+        place.setAddress("Jefferson st 45 b 9");
+
+        placeRepository.save(place);
 
         Meal pizza = new Meal();
         pizza.setName("pizza");
