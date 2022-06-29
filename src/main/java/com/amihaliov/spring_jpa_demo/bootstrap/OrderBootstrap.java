@@ -39,6 +39,7 @@ public class OrderBootstrap implements ApplicationListener<ContextRefreshedEvent
         Customer customer = new Customer();
         customer.setAddress("Peterson 5, ap 6");
         customer.setFirstName("Pete");
+        customer.setLastName("Jackson");
         customer.setPhone("0123456789");
 
         customerRepository.save(customer);
@@ -83,9 +84,11 @@ public class OrderBootstrap implements ApplicationListener<ContextRefreshedEvent
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        Order order = getOrder();
-        orderRepository.save(order);
-        System.out.println("Saved order " +  order);
-        log.info("Saved order " +  order);
+        if (orderRepository.count() == 0) {
+            Order order = getOrder();
+            orderRepository.save(order);
+            System.out.println("Saved order " + order);
+            log.info("Saved order " + order);
+        }
     }
 }
