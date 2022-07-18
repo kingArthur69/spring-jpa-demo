@@ -1,0 +1,12 @@
+alter table customers
+  add created_date timestamp,
+  add last_modified_date timestamp;
+alter table employees
+  add created_date timestamp,
+  add last_modified_date timestamp;
+alter table meals
+  add created_date timestamp,
+  add last_modified_date timestamp;
+alter table orders
+  add created_date timestamp,
+  add last_modified_date timestamp;

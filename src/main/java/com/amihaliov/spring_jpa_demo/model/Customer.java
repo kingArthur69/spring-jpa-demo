@@ -1,12 +1,14 @@
 package com.amihaliov.spring_jpa_demo.model;
 
-import lombok.ToString;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+@NamedQueries({
+        @NamedQuery(name = "findAllCustomers", query = "select c from Customer c"),
+        @NamedQuery(name = "findCustomersByAddress", query = "select c from Customer c where c.address = :address"),
+        @NamedQuery(name = "Customer.jpaNamed", query = "select c from Customer c where c.phone = :phone")
+})
 @Entity
 @Table(name = "customers")
 public class Customer extends Person {
