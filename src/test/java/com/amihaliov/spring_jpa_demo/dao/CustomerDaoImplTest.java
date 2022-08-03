@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("local")
@@ -90,6 +92,54 @@ class CustomerDaoImplTest {
         customerDao.delete(save.getId());
 
         assertThrows(JpaObjectRetrievalFailureException.class, () -> customerDao.getById(save.getId()));
+    }
+
+    @Test
+    void findAllPageable() {
+        Customer customer = new Customer();
+        customer.setFirstName("TestPageable");
+        customerDao.save(customer);
+
+        customer = new Customer();
+        customer.setFirstName("TestPageable2");
+        customerDao.save(customer);
+
+        List<Customer> customers = customerDao.findAll(1, 0);
+
+        assertNotNull(customers);
+        assertEquals(1, customers.size());
+        assertEquals("TestPageable", customers.get(0).getFirstName());
+    }
+
+    @Test
+    void findAllPageable_SecondPage() {
+        Customer customer = new Customer();
+        customer.setFirstName("TestPageable");
+        customerDao.save(customer);
+
+        List<Customer> customers = customerDao.findAll(1, 10);
+
+        assertNotNull(customers);
+        assertEquals(0, customers.size());
+    }
+
+    @Test
+    void findAllSortedByFirstName() {
+        Customer customer = new Customer();
+        customer.setFirstName("ATestName");
+
+        customerDao.save(customer);
+
+        customer = new Customer();
+        customer.setFirstName("BTestName");
+
+        customerDao.save(customer);
+
+        List<Customer> customers = customerDao.findAllSortedByFirstName();
+
+        assertNotNull(customers);
+        assertNotNull(customers.get(0));
+        assertEquals("ATestName", customers.get(0).getFirstName());
     }
 
     @TestConfiguration
